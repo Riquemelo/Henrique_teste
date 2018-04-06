@@ -1,48 +1,56 @@
 function create(){
-
-        var nome = document.getElementById("formNome").value;
-        var nasc = document.getElementById("formNasc").value;
-        var cpf = document.getElementById("formCpf").value;
-        var carro = document.getElementById("formCarro").value;
-        var sexo = document.getElementById("formSexo").value;
-        var status = document.getElementById("formStatus").value;
-        //alert(document.querySelectorAll("input")[0].value);
-        //alert(document.getElementById("formCadastro formNome").id);
-
+//Variaveis do motorista
+        var nome = $("#formNome").val();
+        var nasc = $("#formNasc").val();
+        var cpf = $("#formCpf").val();
+        var carro = $("#formCarro").val();
+        var sexo = $("#formSexo").val();
+        var status = $("#formStatus").val();
+//Variavel de controle para apresentação de Erro
+        var error = "";
+        var cerr = 0;
         submitOK = "true";
-
+//Validação dos dados
         if (nome == "") {
-            alert("campo Nome não pode ficar vazio");
+            if(cerr == 0) {error += "nome"; cerr++}
+            else {error += ", nome"; cerr++}
+             
             submitOK = "false";
         }
         
         if (nasc == "" || parseInt(nasc.substr(0,2)) > 31 || 
         parseInt(nasc.substr(2,2)) > 12 || parseInt(nasc.substr(4,4)) > 2018) {
-            alert("campo Data de Nascimento inválido");
+            if(cerr == 0) {error += "data de nascimento"; cerr++}
+            else {error += ", data de nascimento"; cerr++}
             submitOK = "false";
             }
 
         if (cpf == "") {
-            alert("campo CPF inválido");
+            if(cerr == 0) {error += "CPF"; cerr++}
+            else {error += ", CPF"; cerr++}
             submitOK = "false";
         }
 
         if (carro == "") {
-            alert("campo Modelo do Carro inválido");
+            if(cerr == 0) {error += "modelo do carro"; cerr++}
+            else {error += ", modelo do carro"; cerr++}
             submitOK = "false";
         }
         
         if (sexo != "Masculino" && sexo != "Feminino") {
-            alert("campo Sexo inválido");
+            if(cerr == 0) {error += "sexo"; cerr++}
+            else {error += ", sexo"; cerr++}
             submitOK = "false";
         }
 
         if (status != "Ativo" && status != "Inativo") {
-            alert("campo status inválido");
+            if(cerr == 0) {error += "status"; cerr++}
+            else {error += ", status"; cerr++}
             submitOK = "false";
         }
         if (submitOK == "false") {
-            
+            if(cerr == 1){$("#formContainer").append('<span style="color: red"> Por favor, preencha corretamente o campo '+ error +'.</span>')}
+            else{$("#formContainer").append('<span style="color: red"> Por favor, preencha corretamente o campo '+ error +'.</span>')}
             return false;
 
         }else{
@@ -63,15 +71,7 @@ function create(){
             cells[3].innerHTML = carro;
             cells[4].innerHTML = sexo;
             cells[5].innerHTML = status;
-
-            document.getElementById("formNome").value = "";
-            document.getElementById("formNasc").value = "";
-            document.getElementById("formCpf").value = "";
-            document.getElementById("formCarro").value = "";
-            document.getElementById("formSexo").value = "";
-            document.getElementById("formStatus").value = "";
         }
+        $('#adicionarMotorista').modal('toggle');
         
 }
-
-$("#exampleModal").modal(show);

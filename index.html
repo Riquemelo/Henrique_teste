@@ -4,12 +4,13 @@
     <meta charset="utf-8" />
     <title>SuaCorrida</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--CSS-->
+<!--CSS-->
     <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-    <!--Bootstrap-->
+<!--Bootstrap-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
 <body>
+<!--Navbar-->
         <nav class="navbar-expand-lg navbar navbar-dark bg-dark">
                 <a class="navbar-brand" href="#">SuaCorrida</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,17 +37,15 @@
     <div class="body-align">
         <h2 align="center">Motoristas</h2>
         <div align="center">
-            
-            <br>
-            <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        <br>
+<!-- Opções na tela -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adicionarMotorista">
             Adicionar Motorista
         </button>
         <button type="button" class="btn btn-danger">Excluir selecionados</button>
         </div>
-        <!-- Modal para Adicionar Motorista-->     
-      <!-- Modal -->
-      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal para Adicionar Motorista-->     
+      <div class="modal fade" id="adicionarMotorista" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
@@ -56,25 +55,24 @@
               </button>
             </div>
             <div class="modal-body">
+<!--Formulário para Adicionar Motorista-->
                     <form>
-                      <span>Insira os dados do motorista abaixo:</span><br/>
-                      <div class="container">  
+                      <span>Insira os dados do motorista abaixo:</span><br/><br/>
+                      <div id="formContainer" class="container">  
                        <div class="row">
                         <div class="col-sm-6">
                           <input type="text" class="formCadastro" id="formNome" placeholder="Nome">
                           <input type="text" class="formCadastro" id="formNasc" placeholder="Data de Nascimento">
-                          <label>Sexo:</label>
-                          <select class="formCadastro" id="formSexo" name="sexo">
+                          <input type="text" class="formCadastro" id="formCpf" placeholder="CPF">
+                        </div>
+                        <div class="col-sm-6">                           
+                          <input type="text" class="formCadastro" id="formCarro" placeholder="Modelo do Carro">
+                          <select class="formCadastro formSelect" id="formSexo" name="sexo">
                               <option value="">--Sexo--</option>
                               <option value="Masculino">Masculino</option>
                               <option value="Feminino">Feminino</option>
-                          </select>
-                        </div>
-                        <div class="col-sm-6">  
-                          <input type="text" class="formCadastro" id="formCpf" placeholder="CPF">
-                          <input type="text" class="formCadastro" id="formCarro" placeholder="Modelo do Carro">
-                          <label>Status:</label>
-                          <select class="formCadastro" id="formStatus" name="status" aria-placeholder="Status">
+                          </select><br>
+                          <select class="formCadastro formSelect" id="formStatus" name="status" aria-placeholder="Status">
                               <option value="">--Status--</option>
                               <option value="Ativo">Ativo</option>
                               <option value="Inativo">Inativo</option>
@@ -92,6 +90,7 @@
         </div>
       </div>
         <br/>
+<!--Tabela de consulta dos Motoristas-->
         <table id="tabela" border="1" align="center">
             <tr>
                 <th>Nome</th>
@@ -111,6 +110,7 @@
             </tr>
         </table>
     </div>
+<!--Footer-->
     <footer class="footer">
         <div class="container">
             Henrique Melo - 2018
