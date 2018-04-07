@@ -12,72 +12,66 @@
 <body>
 <!--Navbar-->
 <nav class="navbar-expand-lg navbar navbar-dark bg-dark">
-    <a class="navbar-brand" href="inicio.html">SuaCorrida</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav inline">
-        <li class="nav-item active">
-          <a class="nav-link" href="inicio.html">Inicio</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="index.html">Motoristas<span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="passageiro.html">Passageiros</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="corridas.html">Corridas</a>
-        </li>
-      </ul>
-    </div>
+        <a class="navbar-brand" href="inicio.html">SuaCorrida</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav inline">
+            <li class="nav-item active">
+              <a class="nav-link" href="inicio.html">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Motoristas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="passageiro.html">Passageiros<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="corridas.html">Corridas</a>
+            </li>
+          </ul>
+        </div>
 </nav>
 <br>
-<!--Conteudo do body-->
-    <div class="body-align">
-        <h2 align="center">Motoristas</h2>
+<!--Conteudo simples do body-->
+    <div>
+        <h2 align="center">Passageiros</h2>
         <div align="center">
         <br>
 <!-- Opções na tela -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adicionarMotorista">
-            Adicionar Motorista
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adicionarPassageiro">
+            Adicionar Passageiro
         </button>
         <button type="button" class="btn btn-danger">Excluir selecionados</button>
         </div>
-<!-- Modal para Adicionar Motorista-->     
-      <div class="modal fade" id="adicionarMotorista" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
+<!-- Modal para Adicionar Passageiro-->     
+      <div class="modal fade" id="adicionarPassageiro" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Adicionar Motorista</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Adicionar Passageiro</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-<!--Formulário para Adicionar Motorista-->
+<!--Formulário para Adicionar Passageiro-->
                     <form>
                       <span>Insira os dados do motorista abaixo:</span><br/><br/>
                       <div id="formContainer" class="container">  
                        <div class="row">
                         <div class="col-sm-6">
-                          <input type="text" class="formCadastro" id="formNomeM" placeholder="Nome">
-                          <input type="text" class="formCadastro" id="formNascM" placeholder="Data de Nascimento">
-                          <input type="text" class="formCadastro" id="formCpfM" placeholder="CPF">
+                          <input type="text" class="formCadastro" id="formNomeP" placeholder="Nome">
+                          <input type="text" class="formCadastro" id="formNascP" placeholder="Data de Nascimento">
                         </div>
-                        <div class="col-sm-6">                           
-                          <input type="text" class="formCadastro" id="formCarroM" placeholder="Modelo do Carro">
-                          <select class="formCadastro formSelect" id="formSexoM" name="sexo">
-                              <option value="">--Sexo--</option>
-                              <option value="Masculino">Masculino</option>
-                              <option value="Feminino">Feminino</option>
-                          </select><br>
-                          <select class="formCadastro formSelect" id="formStatusM" name="status" aria-placeholder="Status">
-                              <option value="">--Status--</option>
-                              <option value="Ativo">Ativo</option>
-                              <option value="Inativo">Inativo</option>
-                          </select>
+                        <div class="col-sm-6">              
+                            <input type="text" class="formCadastro" id="formCpfP" placeholder="CPF">             
+                            <select class="formCadastro formSelect" id="formSexoP" name="sexo">
+                                <option value="">--Sexo--</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Feminino">Feminino</option>
+                            </select><br>
                         </div>
                       </div>
                     </div>
@@ -88,29 +82,25 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-              <button type="button" class="btn btn-primary" onclick="createMotorista()">Confirmar</button>
+              <button type="button" class="btn btn-primary" onclick="createPassageiro()">Confirmar</button>
             </div>
           </div>
         </div>
       </div>
         <br/>
-<!--Tabela de consulta dos Motoristas-->
-        <table id="tabelaMotorista" border="1" align="center">
+<!--Tabela de consulta dos Passageiros-->
+        <table id="tabelaPassageiro" border="1" align="center">
             <tr>
                 <th>Nome</th>
                 <th>Data de Nasc.</th>
                 <th>CPF</th>
-                <th>Modelo do Carro</th>
                 <th>Sexo</th>
-                <th>Status</th>
             </tr>
             <tr>
                 <td>saduhsaudhas</td>
                 <td>00/11/2222</td>
                 <td>222.333.444-55</td>
-                <td>Corsa</td>
                 <td>Masculino</td>
-                <td>Ativo</td>
             </tr>
         </table>
     </div>
