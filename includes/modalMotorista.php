@@ -17,8 +17,8 @@
               <div class="row">
                 <div class="col-sm-6">
                   <input type="text" class="formCadastro" id="formNomeMotorista" placeholder="Nome">
-                  <input type="text" class="formCadastro" id="formNascMotorista" placeholder="Data de Nascimento">
-                  <input type="text" class="formCadastro" id="formCpfMotorista" placeholder="CPF">
+                  <input type="text" class="formCadastro maskDate" id="formNascMotorista" placeholder="Data de Nascimento">
+                  <input type="text" class="formCadastro maskCpf" id="formCpfMotorista" placeholder="CPF">
                 </div>
                 <div class="col-sm-6">
                   <input type="text" class="formCadastro" id="formCarroMotorista" placeholder="Modelo do Carro">
@@ -36,9 +36,7 @@
                 </div>
               </div>
             </div>
-            <div id="mensagemValidacao">
-
-            </div>
+            <div id="mensagemValidacao"><!--Elementos com o campo incorreto--></div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>

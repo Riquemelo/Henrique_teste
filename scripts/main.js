@@ -2,6 +2,11 @@ $(function () {
     var telaSelecionada = $("#navbarButton-Inicio");
     var gridMotorista;
 
+    CarregarGridMotorista();
+
+    $('.maskDate').mask('00/00/0000');
+    $('.maskCpf').mask('000.000.000-00', { reverse: true });
+
     AlterarTela(telaSelecionada);
 
     $(".nav-item").click(function () {
@@ -9,11 +14,19 @@ $(function () {
         AlterarTela(telaSelecionada);
     });
     $('#formMotorista').submit(function (event) {
-        createMotorista();
+        CreateMotorista();
         event.preventDefault();
     });
 
-    CarregarGridMotorista();
+    $("#deleteButtonMotorista").click(function () {
+        ConfirmarDeleteMotoristaSelecionado();
+    });
+    
+    $("#deleteMotoristaConfirmado").click(function() {
+        DeletarMotoristaSelecionado();
+    });
+
+
 
 });
 
@@ -57,40 +70,44 @@ function CarregarGridMotorista() {
         "columns": [
             {
                 "data": "cd_id_motorista", "render": function (value) {
-                    return '<input class="checkboxExclusao" value='+ value +' type="checkbox">';
+                    return '<input class="checkboxExclusao" value=' + value + ' type="checkbox">';
                 }
             },
-            { "data": "nm_nome_motorista"},
+            { "data": "nm_nome_motorista" },
             { "data": "cd_data_nascimento_motorista" },
             { "data": "cd_cpf_motorista" },
             { "data": "nm_modelo_carro_motorista" },
-            { "data": "ic_sexo_masculino_feminino_motorista", "render": function (value) {
+            {
+                "data": "ic_sexo_masculino_feminino_motorista", "render": function (value) {
                     if (value === "0")
                         return "Masculino";
                     else
                         return "Feminino";
                 }
-        
+
             },
             {
                 "data": "ic_status_ativo_inativo_motorista", "render": function (value) {
                     if (value === "1")
-                        return '<label class="switch"><input type="checkbox" checked="checked"><span class="slider round"></span></label>';
+                        return '<span class="label-StatusCheckbox">Inativo</span><label class="switch"><input type="checkbox" checked="checked" value="1"><span class="slider round"></span></label><span class="label-StatusCheckbox">Ativo</span>';
                     else
-                        return '<label class="switch"><input type="checkbox"><span class="slider round"></span></label>';
-                }
+                        return '<span class="label-StatusCheckbox">Inativo</span><label class="switch"><input type="checkbox" value="0"><span class="slider round"></span></label><span class="label-StatusCheckbox">Ativo</span>';
+                },
             }
         ],
         "drawCallback": function () {
             $('.switch').click(function () {
-                debugger;
-                //alert($(this).rows('.selected').data);
+                var status = $(this).children(':first-child').val();
+                var linha = $(this).parents('tr').children(':first-child').children(':first-child');
+                var idLinha = linha.val();
+                AlterarStatusMotorista(idLinha, status);
+
             });
         }
     });
 }
 
-function createMotorista() {
+function CreateMotorista() {
     //Variaveis do motorista
     var motorista = {
         'Nome': $("#formNomeMotorista").val(),
@@ -113,8 +130,8 @@ function createMotorista() {
     }
 
     if (motorista.Nascimento == "" || parseInt(motorista.Nascimento.substr(0, 2)) > 31 ||
-        parseInt(motorista.Nascimento.substr(2, 2)) > 12 || parseInt(motorista.Nascimento.substr(4, 4)) > 2018 ||
-        motorista.Nascimento.length != 8) {
+        parseInt(motorista.Nascimento.substr(3, 2)) > 12 || parseInt(motorista.Nascimento.substr(6, 4)) > 2018 ||
+        motorista.Nascimento.length != 10) {
         if (motorista.ContadorError == 0) { motorista.MensagemError += "data de nascimento"; motorista.ContadorError++ }
         else { motorista.MensagemError += ", data de nascimento"; motorista.ContadorError++ }
         motorista.SubmitOK = "false";
@@ -132,7 +149,7 @@ function createMotorista() {
         motorista.SubmitOK = "false";
     }
 
-    if (motorista.Sexo != 0  && motorista.Sexo != 1) {
+    if (motorista.Sexo != 0 && motorista.Sexo != 1) {
         if (motorista.ContadorError == 0) { motorista.MensagemError += "sexo"; motorista.ContadorError++ }
         else { motorista.MensagemError += ", sexo"; motorista.ContadorError++ }
         motorista.SubmitOK = "false";
@@ -158,17 +175,18 @@ function createMotorista() {
             url: "../includes/cadastroMotorista.php",
             data: motorista,
             success: function () {
-                $("#mensagemCadastro").html('<span style="color: green"> Dados de motorista inseridos com sucesso!</span>')
+                $("#mensagemCadastro").html('<span style="color: green"> Dados de motorista inseridos com sucesso!</span>');
+                gridMotorista.ajax.reload(false);
             }
         });
-        gridMotorista.ajax.reload(false);
+
     }
-    
+
     $('#adicionarMotorista').modal('toggle');
-    
+
 }
 
-function createPassageiro() {
+function CreatePassageiro() {
     //Variaveis do passageiro
     passageiro = {};
     passageiro.Nome = $("#formNomePassageiro").val();
@@ -238,4 +256,30 @@ function createPassageiro() {
 
     $('#adicionarPassageiro').modal('toggle');
 
+}
+
+function AlterarStatusMotorista(idMotorista, statusMotorista) {
+    $.ajax({
+        type: "POST",
+        url: "../includes/alterarMotorista.php",
+        data: {
+            idMotorista, statusMotorista
+        },
+        success: function () {
+            gridMotorista.ajax.reload(false);
+        }
+    });
+}
+
+function ConfirmarDeleteMotoristaSelecionado() {
+    var confirmarDelete = "";
+    $('.checkboxExclusao:checked').each(function () {
+        confirmarDelete += "<span> -> " + $(this).parent('td').next().text() + "</span></br>";
+    });
+    $("#mensagemDelete").html(confirmarDelete);
+
+}
+
+function DeletarMotoristaSelecionado() {
+    alert("pá");
 }
