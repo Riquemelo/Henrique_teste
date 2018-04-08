@@ -6,6 +6,7 @@
     $primaryKey = 'cd_cpf_motorista';
 
     $columns = array(
+        array( 'db' => 'cd_id_motorista', 'dt' => 'cd_id_motorista' ),
         array( 'db' => 'nm_nome_motorista', 'dt' => 'nm_nome_motorista' ),
         array( 'db' => 'cd_data_nascimento_motorista',  'dt' => 'cd_data_nascimento_motorista' ),
         array( 'db' => 'cd_cpf_motorista',   'dt' => 'cd_cpf_motorista' ),

@@ -10,7 +10,7 @@ $(function () {
     });
     $('#formMotorista').submit(function (event) {
         createMotorista();
-        event.preventDefault(); //Prevent the default submit
+        event.preventDefault();
     });
 
     CarregarGridMotorista();
@@ -56,18 +56,25 @@ function CarregarGridMotorista() {
         },
         "columns": [
             {
-                "render": function () {
-                    return '<input class="checkboxExclusao" type="checkbox">';
+                "data": "cd_id_motorista", "render": function (value) {
+                    return '<input class="checkboxExclusao" value='+ value +' type="checkbox">';
                 }
             },
-            { "data": "nm_nome_motorista" },
+            { "data": "nm_nome_motorista"},
             { "data": "cd_data_nascimento_motorista" },
             { "data": "cd_cpf_motorista" },
             { "data": "nm_modelo_carro_motorista" },
-            { "data": "ic_sexo_masculino_feminino_motorista" },
+            { "data": "ic_sexo_masculino_feminino_motorista", "render": function (value) {
+                    if (value === "0")
+                        return "Masculino";
+                    else
+                        return "Feminino";
+                }
+        
+            },
             {
                 "data": "ic_status_ativo_inativo_motorista", "render": function (value) {
-                    if (value === "Ativo")
+                    if (value === "1")
                         return '<label class="switch"><input type="checkbox" checked="checked"><span class="slider round"></span></label>';
                     else
                         return '<label class="switch"><input type="checkbox"><span class="slider round"></span></label>';
@@ -90,8 +97,8 @@ function createMotorista() {
         'Nascimento': $("#formNascMotorista").val(),
         'Cpf': $("#formCpfMotorista").val(),
         'ModeloCarro': $("#formCarroMotorista").val(),
-        'Sexo': $("#formSexoMotorista").val(),
-        'Status': $("#formStatusMotorista").val()
+        'Sexo': parseInt($("#formSexoMotorista").val()),
+        'Status': parseInt($("#formStatusMotorista").val())
     };
     //Variavel de controle para apresentação de Erro
     motorista.MensagemError = "";
@@ -125,13 +132,13 @@ function createMotorista() {
         motorista.SubmitOK = "false";
     }
 
-    if (motorista.Sexo != "Masculino" && motorista.Sexo != "Feminino") {
+    if (motorista.Sexo != 0  && motorista.Sexo != 1) {
         if (motorista.ContadorError == 0) { motorista.MensagemError += "sexo"; motorista.ContadorError++ }
         else { motorista.MensagemError += ", sexo"; motorista.ContadorError++ }
         motorista.SubmitOK = "false";
     }
 
-    if (motorista.Status != "Ativo" && motorista.Status != "Inativo") {
+    if (motorista.Status != 0 && motorista.Status != 1) {
         if (motorista.ContadorError == 0) { motorista.MensagemError += "status"; motorista.ContadorError++ }
         else { motorista.MensagemError += ", status"; motorista.ContadorError++ }
         motorista.SubmitOK = "false";
@@ -146,35 +153,19 @@ function createMotorista() {
         return false;
 
     } else {
-        // motorista.Table = document.getElementById("tabelaMotorista");
-        // motorista.Row = motorista.Table.insertRow(motorista.Table.getElementsByTagName("tr").length - 1);
-        // cells = [
-        //     motorista.Row.insertCell(0),
-        //     motorista.Row.insertCell(1),
-        //     motorista.Row.insertCell(2),
-        //     motorista.Row.insertCell(3),
-        //     motorista.Row.insertCell(4),
-        //     motorista.Row.insertCell(5)
-        // ];
-
-        // cells[0].innerHTML = motorista.Nome;
-        // cells[1].innerHTML = motorista.Nascimento.substr(0, 2) + "/" + motorista.Nascimento.substr(2, 2) + "/" + motorista.Nascimento.substr(4, 4);
-        // cells[2].innerHTML = motorista.Cpf.substr(0, 3) + "." + motorista.Cpf.substr(3, 3) + "." + motorista.Cpf.substr(6, 3) + "-" + motorista.Cpf.substr(9, 2);
-        // cells[3].innerHTML = motorista.ModeloCarro;
-        // cells[4].innerHTML = motorista.Sexo;
-        // cells[5].innerHTML = motorista.Status;
-
         $.ajax({
             type: "POST",
             url: "../includes/cadastroMotorista.php",
             data: motorista,
             success: function () {
+                $("#mensagemCadastro").html('<span style="color: green"> Dados de motorista inseridos com sucesso!</span>')
             }
         });
-
+        gridMotorista.ajax.reload(false);
     }
-
+    
     $('#adicionarMotorista').modal('toggle');
+    
 }
 
 function createPassageiro() {
@@ -246,8 +237,5 @@ function createPassageiro() {
     }
 
     $('#adicionarPassageiro').modal('toggle');
-
-}
-function salvarDados(nomeMotorista, dataNascimentoMotorista, cpfMotorista, modeloCarroMotorista, sexoMotorista, statusMotorista) {
 
 }

@@ -1,4 +1,5 @@
-<div class="tipoTela" id="div-PageMotorista">
+<div class="tipoTela" id="div-PageMotorista">  
+
     <h2 align="center">Motoristas</h2>
     <div align="center">
       <br>
@@ -6,10 +7,8 @@
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adicionarMotorista">
         Adicionar Motorista
       </button>
-      <button type="button" class="btn btn-danger">Excluir selecionados</button>
+      <button type="button" class="btn btn-danger" >Excluir selecionados</button>
     </div>
-
-    <?php include "../includes/modalMotorista.php"?>
         
     <!--Tabela de consulta dos Motoristas-->
     <div id="container-TabelaMotorista" class="container">
@@ -17,7 +16,7 @@
       <table id="tabelaMotorista" style="width:100%">
       <thead>
         <tr>
-          <th>Excluir</th>
+          <th></th>
           <th>Nome</th>
           <th>Data de Nasc.</th>
           <th>CPF</th>

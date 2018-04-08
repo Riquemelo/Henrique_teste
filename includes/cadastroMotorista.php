@@ -1,14 +1,17 @@
 <?php
     
-    include "crud_Motorista"
+    include "config.php" ;
 
     $nomeMotorista = $_POST['Nome'];
     $dataNascimento = $_POST['Nascimento'];
     $cpf = $_POST['Cpf'];
     $modeloCarro = $_POST['ModeloCarro'];
-    $sexo = $_POST['Sexo'];
-    $status = $_POST['Status'];
+    $sexo = (int)$_POST['Sexo'];
+    $status = (int)$_POST['Status'];
 
-    insertMotorista($nomeMotorista, $data_Nascimento, $cpf, $modeloCarro, $sexo, $status);
+    $sql = "INSERT INTO motorista (cd_cpf_motorista, nm_nome_motorista,cd_data_nascimento_motorista, 
+    nm_modelo_carro_motorista, ic_sexo_masculino_feminino_motorista,ic_status_ativo_inativo_motorista) 
+    VALUES('$cpf', '$nomeMotorista', '$dataNascimento', '$modeloCarro', $sexo, $status)";
+    $con->query($sql);
 
 ?>

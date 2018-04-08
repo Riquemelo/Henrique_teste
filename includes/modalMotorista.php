@@ -24,14 +24,14 @@
                   <input type="text" class="formCadastro" id="formCarroMotorista" placeholder="Modelo do Carro">
                   <select class="formCadastro formSelect" id="formSexoMotorista" name="sexo">
                     <option value="">--Sexo--</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Feminino">Feminino</option>
+                    <option value="0">Masculino</option>
+                    <option value="1">Feminino</option>
                   </select>
                   <br>
                   <select class="formCadastro formSelect" id="formStatusMotorista" name="status" aria-placeholder="Status">
                     <option value="">--Status--</option>
-                    <option value="Ativo">Ativo</option>
-                    <option value="Inativo">Inativo</option>
+                    <option value="0">Inativo</option>
+                    <option value="1">Ativo</option>
                   </select>
                 </div>
               </div>
