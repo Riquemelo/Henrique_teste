@@ -2,12 +2,17 @@ $(function () {
     var telaSelecionada = $("#navbarButton-Inicio");
     var gridMotorista;
     var gridPassageiro;
+    var gridCorrida;
 
     CarregarGridMotorista();
     CarregarGridPassageiro();
+    CarregarGridCorrida();
+    SelectNomeMotoristaToCorrida();
+    SelectNomePassageiroToCorrida();
     
     $('.maskDate').mask('00/00/0000');
     $('.maskCpf').mask('000.000.000-00', { reverse: true });
+    $('.money').mask('000.000.000.000.000,00', {reverse: true});
 
     AlterarTela(telaSelecionada);
     
@@ -15,12 +20,17 @@ $(function () {
         telaSelecionada = $(this);
         AlterarTela(telaSelecionada);
     });
+
     $('#formMotorista').submit(function (event) {
         CreateMotorista();
         event.preventDefault();
     });
     $('#formPassageiro').submit(function (event) {
         CreatePassageiro();
+        event.preventDefault();
+    });
+    $('#formCorrida').submit(function (event) {
+        CreateCorrida();
         event.preventDefault();
     });
 
@@ -43,6 +53,7 @@ $(function () {
     
 });
 
+//Função de Alterar Tela
 function AlterarTela(novaTelaSelecionada) {
     var novaTela;
     $(".nav-item").removeClass('active');
@@ -64,12 +75,16 @@ function AlterarTela(novaTelaSelecionada) {
             break;
         case 'navbarButton-Corrida':
             novaTela = "#div-PageCorrida";
+            gridCorrida.ajax.reload(false);
+            SelectNomeMotoristaToCorrida();
+            SelectNomePassageiroToCorrida();
             break;
     }
     $(".tipoTela").hide();
     $(novaTela).show();
 }
 
+//Funçoes de Select com DataTables
 function CarregarGridMotorista() {
     gridMotorista = $("#tabelaMotorista").DataTable({
         "lengthChange": false,
@@ -153,6 +168,66 @@ function CarregarGridPassageiro() {
     });
 }
 
+function CarregarGridCorrida() { 
+    gridCorrida = $("#tabelaCorrida").DataTable({
+        "lengthChange": false,
+        "info": false,
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "../includes/selectCorrida.php",
+            "type": "POST",
+            "dataType": "JSON"
+        },
+        "columns": [
+            { "data": "nm_nome_motorista" },
+            { "data": "nm_nome_passageiro" },
+            {   
+                "data": "vl_valor_corrida", "render": function (value){
+                     return '<span class="money">R$ ' + parseFloat(value).toFixed(2) + '</span>';
+                } 
+            }
+        ],
+    });
+}
+
+//Funções de Select para Corrida
+function SelectNomeMotoristaToCorrida() {
+    var optionMotorista = "<option value=''>--Nome do Motorista--</option>";
+    $.ajax({
+        type: "POST",
+        url: "../includes/selectNomeMotorista.php",
+        data: "",
+        dataType: 'json',
+        success: function (data) {
+            var nome;
+            for (nome in data) {
+                optionMotorista += '<option value="' + data[nome] + '">' + data[nome] + '</option>';
+            }
+            $('#formNomeMotoristaCorrida').html(optionMotorista);
+        }
+    });            
+    
+}
+
+function SelectNomePassageiroToCorrida(){
+    var optionPassageiro = "<option value=''>--Nome do Passageiro--</option>";
+    $.ajax({
+        type: "POST",
+        url: "../includes/selectNomePassageiro.php",
+        data: "",
+        dataType: 'json',
+        success: function (data) {
+            var nome;
+            for (nome in data) {
+                optionPassageiro += '<option value="' + data[nome] + '">' + data[nome] + '</option>';
+            }
+            $('#formNomePassageiroCorrida').html(optionPassageiro);
+        }
+    });
+}
+
+//Funções de Create
 function CreateMotorista() {
     //Variaveis do motorista
     var motorista = {
@@ -298,6 +373,62 @@ function CreatePassageiro() {
 
 }
 
+function CreateCorrida() { 
+     //Variaveis da corrida
+     var corrida = {
+        'NomeMotorista': $("#formNomeMotoristaCorrida").val(),
+        'NomePassageiro' : $("#formNomePassageiroCorrida").val(),
+        'Valor' : $("#formValorCorrida").val().toString().replace(",", ".")
+    };
+    //Variavel de controle para apresentação de Erro
+    corrida.MensagemError = "";
+    corrida.ContadorError = 0;
+    corrida.SubmitOK = "true";
+    //Validação dos dados
+    if (corrida.NomeMotorista == "") {
+        if (corrida.ContadorError == 0) { corrida.MensagemError += "nome do motorista"; corrida.ContadorError++ }
+        else { corrida.MensagemError += ", nome do motorista"; corrida.ContadorError++ }
+        corrida.SubmitOK = "false";
+    }
+
+    if (corrida.NomePassageiro == "") {
+        if (corrida.ContadorError == 0) { corrida.MensagemError += "nome do passageiro"; corrida.ContadorError++ }
+        else { corrida.MensagemError += ", nome do passageiro"; corrida.ContadorError++ }
+        corrida.SubmitOK = "false";
+    }
+
+    if (corrida.Valor == "") {
+        if (corrida.ContadorError == 0) { corrida.MensagemError += "valor"; corrida.ContadorError++ }
+        else { corrida.MensagemError += ", valor"; corrida.ContadorError++ }
+        corrida.SubmitOK = "false";
+    }
+    //Mensagem de Erro    
+    if (corrida.SubmitOK == "false") {
+        if (corrida.ContadorError == 1) {
+            $("#mensagemValidacaoCorrida").html('<span> Por favor, preencha corretamente o campo ' + corrida.MensagemError + '.</span>');
+        }
+        else {
+            $("#mensagemValidacaoCorrida").html('<span> Por favor, preencha corretamente o campo ' + corrida.MensagemError + '.</span>');
+        }
+        return false;
+
+    } else {
+        $.ajax({
+            type: "POST",
+            url: "../includes/cadastroCorrida.php",
+            data: corrida,
+            success: function () {
+                $("#mensagemCadastroCorrida").html('<span style="color: green"> Corrida inserida com sucesso!</span>');
+                gridCorrida.ajax.reload(false);
+            }
+        });
+        
+    }
+
+    $('#adicionarCorrida').modal('toggle');
+}
+
+//Função de Update
 function AlterarStatusMotorista(idMotorista, statusMotorista) {
     $.ajax({
         type: "POST",
@@ -310,6 +441,7 @@ function AlterarStatusMotorista(idMotorista, statusMotorista) {
         }
     });
 }
+
 
 function ConfirmarDeleteMotoristaSelecionado() {
     var confirmarDelete = "";
@@ -332,19 +464,6 @@ function ConfirmarDeleteMotoristaSelecionado() {
 
 }
 
-function DeletarMotoristaSelecionado(idMotorista) {
-    $.ajax({
-        type: "POST",
-        url: "../includes/deletarMotorista.php",
-        data: {
-            idMotorista
-        },
-        success: function () {
-            gridMotorista.ajax.reload(false);
-        }
-    });
-}
-
 function ConfirmarDeletePassageiroSelecionado(){
     var confirmarDelete = "";
     var formHidden = "";
@@ -362,6 +481,20 @@ function ConfirmarDeletePassageiroSelecionado(){
         });
         $('#deletarPassageiro').modal('toggle');
         event.preventDefault();
+    });
+}
+
+//Funções de Delete
+function DeletarMotoristaSelecionado(idMotorista) {
+    $.ajax({
+        type: "POST",
+        url: "../includes/deletarMotorista.php",
+        data: {
+            idMotorista
+        },
+        success: function () {
+            gridMotorista.ajax.reload(false);
+        }
     });
 }
 

@@ -15,7 +15,7 @@
         <li class="nav-item" id="navbarButton-Passageiro">
           <a class="nav-link" style="cursor: pointer;">Passageiros</a>
         </li>
-        <li class="nav-item" id="navbarButton-Corridas">
+        <li class="nav-item" id="navbarButton-Corrida">
           <a class="nav-link" style="cursor: pointer;">Corridas</a>
         </li>
       </ul>

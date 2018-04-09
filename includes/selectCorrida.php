@@ -1,16 +1,14 @@
 <?php
     include 'config.php';
     
-    $table = 'passageiro';
+    $table = 'corrida';
 
-    $primaryKey = 'cd_id_passageiro';
+    $primaryKey = 'cd_id_corrida';
 
     $columns = array(
-        array( 'db' => 'cd_id_passageiro', 'dt' => 'cd_id_passageiro' ),
+        array( 'db' => 'nm_nome_motorista', 'dt' => 'nm_nome_motorista' ),
         array( 'db' => 'nm_nome_passageiro', 'dt' => 'nm_nome_passageiro' ),
-        array( 'db' => 'cd_data_nascimento_passageiro',  'dt' => 'cd_data_nascimento_passageiro' ),
-        array( 'db' => 'cd_cpf_passageiro',   'dt' => 'cd_cpf_passageiro' ),
-        array( 'db' => 'ic_sexo_masculino_feminino_passageiro',   'dt' => 'ic_sexo_masculino_feminino_passageiro' ),
+        array( 'db' => 'vl_valor_corrida',   'dt' => 'vl_valor_corrida' )
     );
     
     $sql_details = array(

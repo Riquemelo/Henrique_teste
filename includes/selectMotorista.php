@@ -27,26 +27,4 @@
         SSP::simple( $_POST, $sql_details, $table, $primaryKey, $columns )
     );
 
-
-
-
-    // $sql = ("SELECT * FROM motorista");
-    // $result = $con->query($sql);
-    
-
-    // $lin = $result->fetch_assoc();
-    // echo json_encode($lin);
-
-
-    // $nomeMotorista = $lin["nm_nome_motorista"];
-    // $dataNascimento = $lin["cd_data_nascimento_motorista"];
-    // $cpf = $lin["cd_cpf_motorista"];
-    // $modeloCarro = $lin["nm_modelo_carro_motorista"];
-    // $sexo = $lin["ic_sexo_masculino_feminino_motorista"];
-    // $status = $lin["ic_status_ativo_inativo_motorista"];
-
-    // while($row = $result->fetch_assoc()) {
-    //     echo $row["cd_cpf_motorista"];
-    //     echo  "id: " . $row["cd_cpf_motorista"]. " - Name: " . $row["nm_nome_motorista"]. " Data Nasc: " . $row["cd_data_nascimento_motorista"]. "<br>";
-    // }
 ?>

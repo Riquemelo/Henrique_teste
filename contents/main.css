@@ -12,7 +12,7 @@
     color: whitesmoke;
 }
 .formCadastro{
-    margin: 1% 0.5%;
+    margin: 5% 1%;
     height: 25px;
 }
 .formSelect{
@@ -20,6 +20,9 @@
 }
 #mensagemValidacao{
     color: red;
+}
+#mensagemValidacaoCorrida{
+  color: red;
 }
 
 .switch {
@@ -79,4 +82,9 @@
   .label-StatusCheckbox{
     font-size: 12px;
     margin-bottom: 20%;
+  }
+
+  #formValorCorrida{
+    width: 84%;
+    
   }

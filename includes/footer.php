@@ -5,6 +5,7 @@
   </footer>
 </body>
 <!--Modals-->
+<?php include "../includes/modalCorrida.php"?>
 <?php include "../includes/modalMotorista.php"?>
 <?php include "../includes/modalPassageiro.php"?>
 <?php include "../includes/modalDeleteMotorista.php"?>
