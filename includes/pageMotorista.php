@@ -1,5 +1,4 @@
 <div class="tipoTela" id="div-PageMotorista">  
-
     <h2 align="center">Motoristas</h2>
     <div align="center">
       <br>
@@ -10,8 +9,7 @@
       <button type="button" id="deleteButtonMotorista" class="btn btn-danger">
         Excluir selecionados
       </button>
-    </div>
-        
+    </div>  
     <!--Tabela de consulta dos Motoristas-->
     <div id="container-TabelaMotorista" class="container">
       <div id="mensagemCadastro"><!--Mensagem de cadastro concluido--></div>
@@ -20,13 +18,13 @@
         <tr>
           <th id="table-idMotorista"></th>
           <th id="table-nomeMotorista">Nome</th>
-          <th id="table-nascimentoMotorista">Data de Nasc.</th>
+          <th id="table-nascimentoMotorista">Data de Nascimento</th>
           <th id="table-cpfMotorista">CPF</th>
           <th id="table-modeloCarroMotorista">Modelo do Carro</th>
           <th id="table-sexoMotorista">Sexo</th>
           <th id="table-statusMotorista">Status</th>
         </tr>
-        </thead>
+      </thead>
       </table>
     </div>
   </div>

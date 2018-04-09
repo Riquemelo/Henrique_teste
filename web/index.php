@@ -18,7 +18,9 @@
 
 <?php include "../includes/pageMotorista.php" ?>
 
-<?php include "../includes/pagePassageiro.php>" ?>  
+<?php include "../includes/pagePassageiro.php" ?>  
+
+<?php include "../includes/pageCorrida.php" ?>
 
 <?php include "../includes/footer.php" ?>  
   <!--Footer-->

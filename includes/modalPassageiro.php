@@ -2,7 +2,7 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
         <!--Formulário para Adicionar Passageiro-->
-        <form>
+        <form id="formPassageiro">
           <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">Adicionar Passageiro</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -10,34 +10,31 @@
             </button>
           </div>
           <div class="modal-body">
-            <span>Insira os dados do motorista abaixo:</span>
+            <span>Insira os dados do passageiro abaixo:</span>
             <br/>
             <br/>
-
             <div id="formContainer" class="container">
               <div class="row">
                 <div class="col-sm-6">
                   <input type="text" class="formCadastro" id="formNomePassageiro" placeholder="Nome">
-                  <input type="text" class="formCadastro" id="formNascPassageiro" placeholder="Data de Nascimento">
+                  <input type="text" class="formCadastro maskDate" id="formNascPassageiro" placeholder="Data de Nascimento">
                 </div>
                 <div class="col-sm-6">
-                  <input type="text" class="formCadastro" id="formCpfPassageiro" placeholder="CPF">
+                  <input type="text" class="formCadastro maskCpf" id="formCpfPassageiro" placeholder="CPF">
                   <select class="formCadastro formSelect" id="formSexoPassageiro" name="sexo">
                     <option value="">--Sexo--</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Feminino">Feminino</option>
+                    <option value="0">Masculino</option>
+                    <option value="1">Feminino</option>
                   </select>
                   <br>
                 </div>
               </div>
             </div>
-            <div id="mensagemValidacao">
-
-            </div>
+            <div id="mensagemValidacao"><!--Elementos com o campo incorreto--></div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" onclick="createPassageiro()">Confirmar</button>
+            <button type="submit" class="btn btn-primary">Confirmar</button>
           </div>
         </form>
       </div>

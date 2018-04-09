@@ -3,7 +3,7 @@
     
     $table = 'motorista';
 
-    $primaryKey = 'cd_cpf_motorista';
+    $primaryKey = 'cd_id_motorista';
 
     $columns = array(
         array( 'db' => 'cd_id_motorista', 'dt' => 'cd_id_motorista' ),

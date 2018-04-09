@@ -1,8 +1,10 @@
 $(function () {
     var telaSelecionada = $("#navbarButton-Inicio");
     var gridMotorista;
+    var gridPassageiro;
 
     CarregarGridMotorista();
+    CarregarGridPassageiro();
     
     $('.maskDate').mask('00/00/0000');
     $('.maskCpf').mask('000.000.000-00', { reverse: true });
@@ -17,21 +19,28 @@ $(function () {
         CreateMotorista();
         event.preventDefault();
     });
+    $('#formPassageiro').submit(function (event) {
+        CreatePassageiro();
+        event.preventDefault();
+    });
 
     $("#deleteButtonMotorista").click(function () {
-        if($(".checkboxExclusao").is(":checked")){
+        if($(".checkboxExclusaoMotorista").is(":checked")){
             $('#deletarMotorista').modal('toggle');
             ConfirmarDeleteMotoristaSelecionado();
         }else{
             alert('Ops! É necessário selecionar algum campo da tabela antes');
         }
-        
-
+    });
+    $("#deleteButtonPassageiro").click(function () {
+        if($(".checkboxExclusaoPassageiro").is(":checked")){
+            $('#deletarPassageiro').modal('toggle');
+            ConfirmarDeletePassageiroSelecionado();
+        }else{
+            alert('Ops! É necessário selecionar algum campo da tabela antes');
+        }
     });
     
-    
-
-
 });
 
 function AlterarTela(novaTelaSelecionada) {
@@ -51,6 +60,7 @@ function AlterarTela(novaTelaSelecionada) {
             break;
         case 'navbarButton-Passageiro':
             novaTela = "#div-PagePassageiro";
+            gridPassageiro.ajax.reload(false);
             break;
         case 'navbarButton-Corrida':
             novaTela = "#div-PageCorrida";
@@ -74,7 +84,7 @@ function CarregarGridMotorista() {
         "columns": [
             {
                 "data": "cd_id_motorista", "render": function (value) {
-                    return '<input class="checkboxExclusao" value=' + value + ' type="checkbox">';
+                    return '<input class="checkboxExclusaoMotorista" value=' + value + ' type="checkbox">';
                 }
             },
             { "data": "nm_nome_motorista" },
@@ -108,6 +118,38 @@ function CarregarGridMotorista() {
 
             });
         }
+    });
+}
+
+function CarregarGridPassageiro() {
+    gridPassageiro = $("#tabelaPassageiro").DataTable({
+        "lengthChange": false,
+        "info": false,
+        "processing": true,
+        "serverSide": true,
+        "ajax": {
+            "url": "../includes/selectPassageiro.php",
+            "type": "POST",
+            "dataType": "JSON"
+        },
+        "columns": [
+            {
+                "data": "cd_id_passageiro", "render": function (value) {
+                    return '<input class="checkboxExclusaoPassageiro" value=' + value + ' type="checkbox">';
+                }
+            },
+            { "data": "nm_nome_passageiro" },
+            { "data": "cd_data_nascimento_passageiro" },
+            { "data": "cd_cpf_passageiro" },
+            {
+                "data": "ic_sexo_masculino_feminino_passageiro", "render": function (value) {
+                    if (value === "0")
+                        return "Masculino";
+                    else
+                        return "Feminino";
+                }
+            }
+        ],
     });
 }
 
@@ -245,8 +287,8 @@ function CreatePassageiro() {
             url: "../includes/cadastroPassageiro.php",
             data: passageiro,
             success: function () {
-                $("#mensagemCadastro").html('<span style="color: green"> Dados de motorista inseridos com sucesso!</span>');
-                gridMotorista.ajax.reload(false);
+                $("#mensagemCadastro").html('<span style="color: green"> Dados de passageiro inseridos com sucesso!</span>');
+                gridPassageiro.ajax.reload(false);
             }
         });
         
@@ -272,7 +314,7 @@ function AlterarStatusMotorista(idMotorista, statusMotorista) {
 function ConfirmarDeleteMotoristaSelecionado() {
     var confirmarDelete = "";
     var formHidden = "";
-    $('.checkboxExclusao:checked').each(function () {
+    $('.checkboxExclusaoMotorista:checked').each(function () {
         confirmarDelete += "<span> -> " + $(this).parent('td').next().text() + "</span></br>";
         formHidden += "<input type='hidden' class='formHiddenDelete' value='"+ $(this).val() +"'/></br>";
     });
@@ -299,6 +341,39 @@ function DeletarMotoristaSelecionado(idMotorista) {
         },
         success: function () {
             gridMotorista.ajax.reload(false);
+        }
+    });
+}
+
+function ConfirmarDeletePassageiroSelecionado(){
+    var confirmarDelete = "";
+    var formHidden = "";
+    $('.checkboxExclusaoPassageiro:checked').each(function () {
+        confirmarDelete += "<span> -> " + $(this).parent('td').next().text() + "</span></br>";
+        formHidden += "<input type='hidden' class='formHiddenDelete' value='"+ $(this).val() +"'/></br>";
+    });
+    $("#mensagemDeletePassageiro").html(confirmarDelete);
+    $("#div-formDeletePassageiro").html(formHidden);
+    
+
+    $("#formDeletePassageiro").submit(function(event) {
+        $('.formHiddenDelete').each(function () {
+            DeletarPassageiroSelecionado($(this).val());
+        });
+        $('#deletarPassageiro').modal('toggle');
+        event.preventDefault();
+    });
+}
+
+function DeletarPassageiroSelecionado(idPassageiro){
+    $.ajax({
+        type: "POST",
+        url: "../includes/deletarPassageiro.php",
+        data: {
+            idPassageiro
+        },
+        success: function () {
+            gridPassageiro.ajax.reload(false);
         }
     });
 }
