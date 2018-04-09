@@ -11,10 +11,13 @@
             <h6>Elementos a serem excluidos:</h6></br>
             <div id="mensagemDelete"><!--Elementos a serem excluidos--></div>
           </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-primary" id="deleteMotoristaConfirmado">Excluir</button>
-          </div>
+          <form id="formDeleteMotorista">
+            <div id="div-formDeleteMotorista"><!--Hidden Form para submit--></div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary" id="deleteMotoristaConfirmado">Excluir</button>
+            </div>
+          </form>
       </div>
     </div>
   </div>

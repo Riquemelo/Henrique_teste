@@ -3,12 +3,12 @@ $(function () {
     var gridMotorista;
 
     CarregarGridMotorista();
-
+    
     $('.maskDate').mask('00/00/0000');
     $('.maskCpf').mask('000.000.000-00', { reverse: true });
 
     AlterarTela(telaSelecionada);
-
+    
     $(".nav-item").click(function () {
         telaSelecionada = $(this);
         AlterarTela(telaSelecionada);
@@ -19,13 +19,17 @@ $(function () {
     });
 
     $("#deleteButtonMotorista").click(function () {
-        ConfirmarDeleteMotoristaSelecionado();
+        if($(".checkboxExclusao").is(":checked")){
+            $('#deletarMotorista').modal('toggle');
+            ConfirmarDeleteMotoristaSelecionado();
+        }else{
+            alert('Ops! É necessário selecionar algum campo da tabela antes');
+        }
+        
+
     });
     
-    $("#deleteMotoristaConfirmado").click(function() {
-        DeletarMotoristaSelecionado();
-    });
-
+    
 
 
 });
@@ -188,11 +192,12 @@ function CreateMotorista() {
 
 function CreatePassageiro() {
     //Variaveis do passageiro
-    passageiro = {};
-    passageiro.Nome = $("#formNomePassageiro").val();
-    passageiro.Nascimento = $("#formNascPassageiro").val();
-    passageiro.Cpf = $("#formCpfPassageiro").val();
-    passageiro.Sexo = $("#formSexoPassageiro").val();
+    var passageiro = {
+        'Nome': $("#formNomePassageiro").val(),
+        'Nascimento' : $("#formNascPassageiro").val(),
+        'Cpf' : $("#formCpfPassageiro").val(),
+        'Sexo' : $("#formSexoPassageiro").val(),
+    };
     //Variavel de controle para apresentação de Erro
     passageiro.MensagemError = "";
     passageiro.ContadorError = 0;
@@ -206,8 +211,8 @@ function CreatePassageiro() {
     }
 
     if (passageiro.Nascimento == "" || parseInt(passageiro.Nascimento.substr(0, 2)) > 31 ||
-        parseInt(passageiro.Nascimento.substr(2, 2)) > 12 || parseInt(passageiro.Nascimento.substr(4, 4)) > 2018 ||
-        passageiro.Nascimento.length != 8) {
+        parseInt(passageiro.Nascimento.substr(3, 2)) > 12 || parseInt(passageiro.Nascimento.substr(6, 4)) > 2018 ||
+        passageiro.Nascimento.length != 10) {
         if (passageiro.ContadorError == 0) { passageiro.MensagemError += "data de nascimento"; passageiro.ContadorError++ }
         else { passageiro.MensagemError += ", data de nascimento"; passageiro.ContadorError++ }
         passageiro.SubmitOK = "false";
@@ -219,7 +224,7 @@ function CreatePassageiro() {
         passageiro.SubmitOK = "false";
     }
 
-    if (passageiro.Sexo != "Masculino" && passageiro.Sexo != "Feminino") {
+    if (passageiro.Sexo != 0 && passageiro.Sexo != 1) {
         if (passageiro.ContadorError == 0) { passageiro.MensagemError += "sexo"; passageiro.ContadorError++ }
         else { passageiro.MensagemError += ", sexo"; passageiro.ContadorError++ }
         passageiro.SubmitOK = "false";
@@ -235,23 +240,16 @@ function CreatePassageiro() {
         return false;
 
     } else {
-        passageiro.Table = document.getElementById("tabelaPassageiro");
-        passageiro.Row = passageiro.Table.insertRow(passageiro.Table.getElementsByTagName("tr").length - 1);
-        cells = [
-            row.insertCell(0),
-            row.insertCell(1),
-            row.insertCell(2),
-            row.insertCell(3),
-            row.insertCell(4),
-            row.insertCell(5)
-        ];
-
-        cells[0].innerHTML = passageiro.Nome;
-        cells[1].innerHTML = passageiro.Nascimento.substr(0, 2) + "/" + passageiro.Nascimento.substr(2, 2) + "/" + passageiro.Nascimento.substr(4, 4);
-        cells[2].innerHTML = passageiro.Cpf.substr(0, 3) + "." + passageiro.Cpf.substr(3, 3) + "." + passageiro.Cpf.substr(6, 3) + "-" + passageiro.Cpf.substr(9, 2);
-        cells[3].innerHTML = passageiro.ModeloCarro;
-        cells[4].innerHTML = passageiro.Sexo;
-        cells[5].innerHTML = passageiro.Status;
+        $.ajax({
+            type: "POST",
+            url: "../includes/cadastroPassageiro.php",
+            data: passageiro,
+            success: function () {
+                $("#mensagemCadastro").html('<span style="color: green"> Dados de motorista inseridos com sucesso!</span>');
+                gridMotorista.ajax.reload(false);
+            }
+        });
+        
     }
 
     $('#adicionarPassageiro').modal('toggle');
@@ -273,13 +271,34 @@ function AlterarStatusMotorista(idMotorista, statusMotorista) {
 
 function ConfirmarDeleteMotoristaSelecionado() {
     var confirmarDelete = "";
+    var formHidden = "";
     $('.checkboxExclusao:checked').each(function () {
         confirmarDelete += "<span> -> " + $(this).parent('td').next().text() + "</span></br>";
+        formHidden += "<input type='hidden' class='formHiddenDelete' value='"+ $(this).val() +"'/></br>";
     });
     $("#mensagemDelete").html(confirmarDelete);
+    $("#div-formDeleteMotorista").html(formHidden);
+    
+
+    $("#formDeleteMotorista").submit(function(event) {
+        $('.formHiddenDelete').each(function () {
+            DeletarMotoristaSelecionado($(this).val());
+        });
+        $('#deletarMotorista').modal('toggle');
+        event.preventDefault();
+    });
 
 }
 
-function DeletarMotoristaSelecionado() {
-    alert("pá");
+function DeletarMotoristaSelecionado(idMotorista) {
+    $.ajax({
+        type: "POST",
+        url: "../includes/deletarMotorista.php",
+        data: {
+            idMotorista
+        },
+        success: function () {
+            gridMotorista.ajax.reload(false);
+        }
+    });
 }

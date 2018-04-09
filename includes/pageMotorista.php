@@ -7,7 +7,7 @@
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#adicionarMotorista">
         Adicionar Motorista
       </button>
-      <button type="button" id="deleteButtonMotorista" class="btn btn-danger" data-toggle="modal" data-target="#deletarMotorista">
+      <button type="button" id="deleteButtonMotorista" class="btn btn-danger">
         Excluir selecionados
       </button>
     </div>
