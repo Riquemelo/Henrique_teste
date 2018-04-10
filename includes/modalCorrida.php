@@ -16,14 +16,20 @@
             <div id="formContainer" class="container">
               <div class="row">
                 <div class="col-sm-6">
-                <select class="formCadastro" id="formNomeMotoristaCorrida">        
-                    <!--Valores puxados do banco-->
+                <select class="formCadastro">
+                  <option value="">--Nome do Motorista--</option> 
+                    <div id="formNomeMotoristaCorrida">      
+                      <!--Valores puxados do banco-->
+                    </div> 
                 </select>
                 R$<input type="text" class="formCadastro money" id="formValorCorrida" placeholder="Valor">
                 </div>
                 <div class="col-sm-6">
                 <select class="formCadastro" id="formNomePassageiroCorrida" >
-                    <!--Valores puxados do banco-->
+                  <option value="">--Nome do Passageiro--</option> 
+                    <div id="formNomePassageiroCorrida">      
+                      <!--Valores puxados do banco-->
+                    </div> 
                 </select>
                     
                   <br>

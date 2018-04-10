@@ -193,7 +193,7 @@ function CarregarGridCorrida() {
 
 //Funções de Select para Corrida
 function SelectNomeMotoristaToCorrida() {
-    var optionMotorista = "<option value=''>--Nome do Motorista--</option>";
+    var optionMotorista = "";
     $.ajax({
         type: "POST",
         url: "../includes/selectNomeMotorista.php",
@@ -211,7 +211,7 @@ function SelectNomeMotoristaToCorrida() {
 }
 
 function SelectNomePassageiroToCorrida(){
-    var optionPassageiro = "<option value=''>--Nome do Passageiro--</option>";
+    var optionPassageiro = "";
     $.ajax({
         type: "POST",
         url: "../includes/selectNomePassageiro.php",

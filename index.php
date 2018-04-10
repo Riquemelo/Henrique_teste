@@ -1,6 +1,6 @@
-<?php include "../includes/header.php" ?>
+<?php include "includes/header.php" ?>
 <body>
-<?php include "../includes/navbar.php" ?>
+<?php include "includes/navbar.php" ?>
  
 <!--Conteudo da page inicial-->
   <div class="tipoTela" id="div-PageInicial">
@@ -11,13 +11,13 @@
     </div>
   </div>
 
-<?php include "../includes/pageMotorista.php" ?>
+<?php include "includes/pageMotorista.php" ?>
 
-<?php include "../includes/pagePassageiro.php" ?>  
+<?php include "includes/pagePassageiro.php" ?>  
 
-<?php include "../includes/pageCorrida.php" ?>
+<?php include "includes/pageCorrida.php" ?>
 
-<?php include "../includes/footer.php" ?>  
+<?php include "includes/footer.php" ?>  
   <!--Footer-->
 
 
