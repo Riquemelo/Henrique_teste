@@ -193,7 +193,7 @@ function CarregarGridCorrida() {
 
 //Funções de Select para Corrida
 function SelectNomeMotoristaToCorrida() {
-    var optionMotorista = "";
+    var optionMotorista = "<option value=''>--Nome Passageiro--</option>";
     $.ajax({
         type: "POST",
         url: "../includes/selectNomeMotorista.php",
@@ -204,6 +204,12 @@ function SelectNomeMotoristaToCorrida() {
             for (nome in data) {
                 optionMotorista += '<option value="' + data[nome] + '">' + data[nome] + '</option>';
             }
+            if(optionMotorista == ""){ 
+                optionMotorista = "<option value=''>--Nome Motorista--</option>"; 
+            }
+            $('#formNomeMotoristaCorrida').html(optionMotorista);
+        },
+        error: function (){
             $('#formNomeMotoristaCorrida').html(optionMotorista);
         }
     });            
@@ -211,7 +217,7 @@ function SelectNomeMotoristaToCorrida() {
 }
 
 function SelectNomePassageiroToCorrida(){
-    var optionPassageiro = "";
+    var optionPassageiro = "<option value=''>--Nome Passageiro--</option>";
     $.ajax({
         type: "POST",
         url: "../includes/selectNomePassageiro.php",
@@ -223,7 +229,12 @@ function SelectNomePassageiroToCorrida(){
                 optionPassageiro += '<option value="' + data[nome] + '">' + data[nome] + '</option>';
             }
             $('#formNomePassageiroCorrida').html(optionPassageiro);
+        },
+        error: function (){
+            $('#formNomePassageiroCorrida').html(optionPassageiro);
         }
+        
+        
     });
 }
 
